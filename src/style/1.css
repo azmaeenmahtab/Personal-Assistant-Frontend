@@ -1,0 +1,31 @@
+.card {
+    width: 250px;
+    height: 100px;
+    background-color: #1A57FF;
+    color: white;
+    border-radius: 20px;
+}
+
+.budget-header {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.budget-header h4 {
+    margin: 0;
+    color: white;
+}
+
+.budget-display {
+    padding: 0px 0px 10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.budget-display p {
+
+    margin-top: 0px;
+}
