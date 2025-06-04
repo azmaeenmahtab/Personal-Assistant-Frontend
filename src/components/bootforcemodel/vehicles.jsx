@@ -306,7 +306,46 @@ const Vehicles = () => {
         
     }
 
-//choose other options
+//choose other options and sent api call
+    const handleChooseBike = async () => {
+        try{
+        const token = localStorage.getItem("token");
+
+        if(isNaN(bikeFare) || !bikeFare){
+            return alert("Bike fare not a number or invalid amount")
+        }
+
+        const body = {
+            "vehicle": "Bike",
+            "vehicle_fare": bikeFare
+        };
+
+        const response = await fetch("http://localhost:6543/api/vehicle", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
+        });
+
+        if(!response.ok){
+            const error = response.json();
+            console.log(error)
+            return alert("error in fetching")
+        }
+
+        const data = response.json();
+        alert("Successfully inserted vehicle and fare in db");
+
+        navigate('/comparison');
+    }catch(error){
+
+        alert("Internal server error");
+        console.log(error);
+        return;
+    }
+    }
 
 
 
@@ -333,12 +372,13 @@ const Vehicles = () => {
                     <p>{choosedVehicleFare}</p><p>BDT</p>
                 </div>
         </div>
+        {/* options */}
         <div style={{display:'flex', flexDirection:'column', gap:"10px"}}>
             <h4>Other Options</h4>
             {!isBike && (
             <label style={{display:'flex', gap:"20px"}}>
                 <h4>Approximate Monthly Fare for Bike - {bikeFare} BDT</h4>
-                <button  >Choose Bike</button>
+                <button  onClick={handleChooseBike}>Choose Bike</button>
             </label>
             
             )}
