@@ -15,10 +15,16 @@ const Vehicles = () => {
     const [rickshawFare , setrickshawFare] = useState(0);
     const [minFare, setminfare] = useState(0);
     const [cheapestVehicle, setCheapestVehicle] = useState('');
+    const [isBike, setisBike] = useState(null);
+    const [isCar, setisCar] = useState(null);
+    const [isBus, setisBus] = useState(null);
+    const [isRickshaw, setisRickshaw] = useState(null);
+    const [choosedVehicle, setchoosedVehicle] = useState(null);
+    const [choosedVehicleFare, setchoosedVehicleFare] = useState(0);
 
 
     const handleClickBike = async () =>{
-
+        try{
         const token = localStorage.getItem("token");
 
         const response = await fetch('http://localhost:6543/api/get_distance', {
@@ -49,6 +55,7 @@ const Vehicles = () => {
         setbusFare(bus);
         setcarFare(car);
         setrickshawFare(rickshaw);
+        setchoosedVehicleFare(bike)
         
         const fareInfo = [
             {name: "Bike", fare:bike },
@@ -68,30 +75,238 @@ const Vehicles = () => {
         setCheapestVehicle(minObject.name);
         setminfare(minObject.fare);
 
+        setisBike(true);
+        setisBus(false);
+        setisRickshaw(false);
+        setisCar(false);
+        setchoosedVehicle("Bike")
+        // cheapestVehicle == "Bike" ? setCheapestVehicle(true) : setCheapestVehicle(false);
+        // cheapestVehicle == "Bus" ? setisBus(true) : setisBus(false);
+        // cheapestVehicle == "Car" ? setisCar(true) : setisCar(false);
+        // cheapestVehicle == "Rickshaw" ? setisRickshaw(true) : setisRickshaw(false);
+    }catch(error){
 
-
-
-
-
-
+        console.log(error);
+        return alert("Ineternal Server Error");
     }
 
-    const handleClickCar = () =>{
+
+
+
+        
+    }
+// if first choice is car
+    const handleClickCar = async () =>{
+         try{
+        const token = localStorage.getItem("token");
+
+        const response = await fetch('http://localhost:6543/api/get_distance', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if(!response.ok){
+            alert("Cant get distance from db !!");
+            return;
+        };
+
+        const result = await response.json();
+
+        const distance = result.data.distance;
+
+        setFlag(true);
+
+
+        const bike = distance * 15 * 30;
+        const bus = distance * 2.5 * 30;
+        const car = distance * 25 * 30;
+        const rickshaw = distance * 5 * 30;
+        setbikeFare(bike);
+        setbusFare(bus);
+        setcarFare(car);
+        setrickshawFare(rickshaw);
+        setchoosedVehicleFare(car)
+        const fareInfo = [
+            {name: "Bike", fare:bike },
+            {name: "Bus", fare:bus },
+            {name: "Car", fare:car },
+            {name: "Rickshaw", fare:rickshaw },
+        ];
+
+        const minObject = fareInfo.reduce((min, current) => {
+            return current.fare < min.fare ? current : min;
+        });
+
+        
+
+        console.log(minFare, cheapestVehicle)
+
+        setCheapestVehicle(minObject.name);
+        setminfare(minObject.fare);
+
+        setisCar(true);
+        setisBike(false);
+        setisBus(false);
+        setisRickshaw(false);
+        
+        setchoosedVehicle("Car")
+        // cheapestVehicle == "Bike" ? setisBike(true) : setisBike(false);
+        // cheapestVehicle == "Bus" ? setisBus(true) : setisBus(false);
+        // cheapestVehicle == "Car" ? setisCar(true) : setisCar(false);
+        // cheapestVehicle == "Rickshaw" ? setisRickshaw(true) : setisRickshaw(false);
+    }catch(error){
+
+        console.log(error);
+        return alert("Ineternal Server Error");
+    }
+        
+    }
+//if first choice is bus
+    const handleClickBus = async () =>{
+         try{
+        const token = localStorage.getItem("token");
+
+        const response = await fetch('http://localhost:6543/api/get_distance', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if(!response.ok){
+            alert("Cant get distance from db !!");
+            return;
+        };
+
+        const result = await response.json();
+
+        const distance = result.data.distance;
+
+        setFlag(true);
+
+
+        const bike = distance * 15 * 30;
+        const bus = distance * 2.5 * 30;
+        const car = distance * 25 * 30;
+        const rickshaw = distance * 5 * 30;
+        setbikeFare(bike);
+        setbusFare(bus);
+        setcarFare(car);
+        setrickshawFare(rickshaw);
+        setchoosedVehicleFare(bus)
+        const fareInfo = [
+            {name: "Bike", fare:bike },
+            {name: "Bus", fare:bus },
+            {name: "Car", fare:car },
+            {name: "Rickshaw", fare:rickshaw },
+        ];
+
+        const minObject = fareInfo.reduce((min, current) => {
+            return current.fare < min.fare ? current : min;
+        });
+
+        
+
+        console.log(minFare, cheapestVehicle)
+
+        setCheapestVehicle(minObject.name);
+        setminfare(minObject.fare);
+
+        setisBus(true);
+        setisBike(false);
+         
+        setisRickshaw(false);
+        setisCar(false);
+        setchoosedVehicle("Bus")
+        // cheapestVehicle == "Bike" ? setisBike(true) : setisBike(false);
+        // cheapestVehicle == "Bus" ? setisBus(true) : setisBus(false);
+        // cheapestVehicle == "Car" ? setisCar(true) : setisCar(false);
+        // cheapestVehicle == "Rickshaw" ? setisRickshaw(true) : setisRickshaw(false);
+    }catch(error){
+
+        console.log(error);
+        return alert("Ineternal Server Error");
+    }
         
     }
 
-    const handleClickBus = () =>{
+    const handleClickRick = async () =>{
+         try{
+        const token = localStorage.getItem("token");
+
+        const response = await fetch('http://localhost:6543/api/get_distance', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if(!response.ok){
+            alert("Cant get distance from db !!");
+            return;
+        };
+
+        const result = await response.json();
+
+        const distance = result.data.distance;
+
+        setFlag(true);
+
+
+        const bike = distance * 15 * 30;
+        const bus = distance * 2.5 * 30;
+        const car = distance * 25 * 30;
+        const rickshaw = distance * 5 * 30;
+        setbikeFare(bike);
+        setbusFare(bus);
+        setcarFare(car);
+        setrickshawFare(rickshaw);
+        setchoosedVehicleFare(rickshaw)
+        const fareInfo = [
+            {name: "Bike", fare:bike },
+            {name: "Bus", fare:bus },
+            {name: "Car", fare:car },
+            {name: "Rickshaw", fare:rickshaw },
+        ];
+
+        const minObject = fareInfo.reduce((min, current) => {
+            return current.fare < min.fare ? current : min;
+        });
+
+        
+
+        console.log(minFare, cheapestVehicle)
+
+        setCheapestVehicle(minObject.name);
+        setminfare(minObject.fare);
+
+        setisRickshaw(true);
+        setisBike(false);
+        setisBus(false);
+         setisCar(false);
+        setchoosedVehicle("Rickshaw")
+        // cheapestVehicle == "Bike" ? setisBike(true) : setisBike(false);
+        // cheapestVehicle == "Bus" ? setisBus(true) : setisBus(false);
+        // cheapestVehicle == "Car" ? setisCar(true) : setisCar(false);
+        // cheapestVehicle == "Rickshaw" ? setisRickshaw(true) : setisRickshaw(false);
+    }catch(error){
+
+        console.log(error);
+        return alert("Ineternal Server Error");
+    }
         
     }
 
-    const handleClickRick = () =>{
+    const handleClickPersonal = async () =>{
         
     }
 
-    const handleClickPersonal = () =>{
-        
-    }
-
+//choose other options
 
 
 
@@ -112,26 +327,42 @@ const Vehicles = () => {
         <div style={{display:"flex",flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
         <div className="card">
                 <div className="budget-header">
-                    <h4>Approximate Monthly Transport Cost in Bike</h4>
+                    <h4>Approximate Monthly Transport Cost in {choosedVehicle}</h4>
                 </div>
                 <div className="budget-display">
-                    <p>{bikeFare}</p><p>BDT</p>
+                    <p>{choosedVehicleFare}</p><p>BDT</p>
                 </div>
         </div>
-        <div>
+        <div style={{display:'flex', flexDirection:'column', gap:"10px"}}>
             <h4>Other Options</h4>
+            {!isBike && (
             <label style={{display:'flex', gap:"20px"}}>
-                <h4>Approximate Monthly Fare for Bus - {busFare}</h4>
-                <button>Choose Bus</button>
-            </label><br />
+                <h4>Approximate Monthly Fare for Bike - {bikeFare} BDT</h4>
+                <button  >Choose Bike</button>
+            </label>
+            
+            )}
+            
+            {!isBus && (
+            <label style={{display:'flex', gap:"20px"}}>
+                <h4>Approximate Monthly Fare for Bus - {busFare} BDT</h4>
+                <button  >Choose Bus</button>
+            </label>
+            )}
+            
+            {!isCar && (
             <label  style={{display:'flex', gap:"20px"}}>
-                <h4>Approximate Monthly Fare for Car - {carFare}</h4>
+                <h4>Approximate Monthly Fare for Car - {carFare} BDT</h4>
                 <button>Choose Car</button> 
-            </label><br />
+            </label>
+            )}
+            
+            {!isRickshaw && (
             <label style={{display:'flex', gap:"20px"}}>
-                <h4>Approximate Monthly Fare for Rickshaw - {rickshawFare}</h4>
+                <h4>Approximate Monthly Fare for Rickshaw - {rickshawFare} BDT</h4>
                 <button>Choose Rickshaw</button>
             </label>
+            )}
         </div>
         <br /><br />
         <div>
