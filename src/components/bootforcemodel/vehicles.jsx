@@ -80,10 +80,7 @@ const Vehicles = () => {
         setisRickshaw(false);
         setisCar(false);
         setchoosedVehicle("Bike")
-        // cheapestVehicle == "Bike" ? setCheapestVehicle(true) : setCheapestVehicle(false);
-        // cheapestVehicle == "Bus" ? setisBus(true) : setisBus(false);
-        // cheapestVehicle == "Car" ? setisCar(true) : setisCar(false);
-        // cheapestVehicle == "Rickshaw" ? setisRickshaw(true) : setisRickshaw(false);
+        
     }catch(error){
 
         console.log(error);
@@ -153,10 +150,7 @@ const Vehicles = () => {
         setisRickshaw(false);
         
         setchoosedVehicle("Car")
-        // cheapestVehicle == "Bike" ? setisBike(true) : setisBike(false);
-        // cheapestVehicle == "Bus" ? setisBus(true) : setisBus(false);
-        // cheapestVehicle == "Car" ? setisCar(true) : setisCar(false);
-        // cheapestVehicle == "Rickshaw" ? setisRickshaw(true) : setisRickshaw(false);
+        
     }catch(error){
 
         console.log(error);
@@ -222,10 +216,7 @@ const Vehicles = () => {
         setisRickshaw(false);
         setisCar(false);
         setchoosedVehicle("Bus")
-        // cheapestVehicle == "Bike" ? setisBike(true) : setisBike(false);
-        // cheapestVehicle == "Bus" ? setisBus(true) : setisBus(false);
-        // cheapestVehicle == "Car" ? setisCar(true) : setisCar(false);
-        // cheapestVehicle == "Rickshaw" ? setisRickshaw(true) : setisRickshaw(false);
+        
     }catch(error){
 
         console.log(error);
@@ -290,10 +281,7 @@ const Vehicles = () => {
         setisBus(false);
          setisCar(false);
         setchoosedVehicle("Rickshaw")
-        // cheapestVehicle == "Bike" ? setisBike(true) : setisBike(false);
-        // cheapestVehicle == "Bus" ? setisBus(true) : setisBus(false);
-        // cheapestVehicle == "Car" ? setisCar(true) : setisCar(false);
-        // cheapestVehicle == "Rickshaw" ? setisRickshaw(true) : setisRickshaw(false);
+       
     }catch(error){
 
         console.log(error);
@@ -302,11 +290,7 @@ const Vehicles = () => {
         
     }
 
-    const handleClickPersonal = async () =>{
-        
-    }
-
-//choose other options and sent api call
+//choose other options and sent api calls
     const handleChooseBike = async () => {
         try{
         const token = localStorage.getItem("token");
@@ -347,6 +331,168 @@ const Vehicles = () => {
     }
     }
 
+    //----
+     const handleChooseBus = async () => {
+        try{
+        const token = localStorage.getItem("token");
+
+        if(isNaN(busFare) || !busFare){
+            return alert("Bus fare not a number or invalid amount")
+        }
+
+        const body = {
+            "vehicle": "Bus",
+            "vehicle_fare": busFare
+        };
+
+        const response = await fetch("http://localhost:6543/api/vehicle", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
+        });
+
+        if(!response.ok){
+            const error = response.json();
+            console.log(error)
+            return alert("error in fetching")
+        }
+
+        const data = response.json();
+        alert("Successfully inserted vehicle and fare in db");
+
+        navigate('/comparison');
+    }catch(error){
+
+        alert("Internal server error");
+        console.log(error);
+        return;
+    }
+    }
+    //-------
+    const handleChooseCar = async () => {
+        try{
+        const token = localStorage.getItem("token");
+
+        if(isNaN(carFare) || !carFare){
+            return alert("car fare not a number or invalid amount")
+        }
+
+        const body = {
+            "vehicle": "Car",
+            "vehicle_fare": carFare
+        };
+
+        const response = await fetch("http://localhost:6543/api/vehicle", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
+        });
+
+        if(!response.ok){
+            const error = response.json();
+            console.log(error)
+            return alert("error in fetching")
+        }
+
+        const data = response.json();
+        alert("Successfully inserted vehicle and fare in db");
+
+        navigate('/comparison');
+    }catch(error){
+
+        alert("Internal server error");
+        console.log(error);
+        return;
+    }
+    }
+
+    //------
+    const handleChooseRickshaw = async () => {
+        try{
+        const token = localStorage.getItem("token");
+
+        if(isNaN(rickshawFare) || !rickshawFare){
+            return alert("rickshaw fare not a number or invalid amount")
+        }
+
+        const body = {
+            "vehicle": "Rickshaw",
+            "vehicle_fare": rickshawFare
+        };
+
+        const response = await fetch("http://localhost:6543/api/vehicle", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
+        });
+
+        if(!response.ok){
+            const error = response.json();
+            console.log(error)
+            return alert("error in fetching")
+        }
+
+        const data = response.json();
+        alert("Successfully inserted vehicle and fare in db");
+
+        navigate('/comparison');
+    }catch(error){
+
+        alert("Internal server error");
+        console.log(error);
+        return;
+    }
+    }
+    //priority 
+    const handlePrioritizeChoice = async () => {
+        try{
+        const token = localStorage.getItem("token");
+
+        if(isNaN(choosedVehicleFare) || !choosedVehicleFare){
+            return alert(`${choosedVehicle} fare not a number or invalid amount`)
+        }
+
+        const body = {
+            "vehicle": choosedVehicle,
+            "vehicle_fare": choosedVehicleFare
+        };
+
+        const response = await fetch("http://localhost:6543/api/vehicle", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
+        });
+
+        if(!response.ok){
+            const error = response.json();
+            console.log(error)
+            return alert("error in fetching")
+        }
+
+        const data = response.json();
+        alert("Successfully inserted vehicle and fare in db");
+
+        navigate('/comparison');
+    }catch(error){
+
+        alert("Internal server error");
+        console.log(error);
+        return;
+    }
+    }
+
 
 
 
@@ -358,7 +504,7 @@ const Vehicles = () => {
         <button onClick={handleClickCar}>Uber Car</button>
         <button onClick={handleClickBus}>Public Bus</button>
         <button onClick={handleClickRick}>Autorickshaw</button>
-        <button onClick={handleClickPersonal}>Personal Vehicle</button>
+        
         
         </div>
         <br />
@@ -386,27 +532,27 @@ const Vehicles = () => {
             {!isBus && (
             <label style={{display:'flex', gap:"20px"}}>
                 <h4>Approximate Monthly Fare for Bus - {busFare} BDT</h4>
-                <button  >Choose Bus</button>
+                <button  onClick={handleChooseBus}>Choose Bus</button>
             </label>
             )}
             
             {!isCar && (
             <label  style={{display:'flex', gap:"20px"}}>
                 <h4>Approximate Monthly Fare for Car - {carFare} BDT</h4>
-                <button>Choose Car</button> 
+                <button onClick={handleChooseCar}>Choose Car</button> 
             </label>
             )}
             
             {!isRickshaw && (
             <label style={{display:'flex', gap:"20px"}}>
                 <h4>Approximate Monthly Fare for Rickshaw - {rickshawFare} BDT</h4>
-                <button>Choose Rickshaw</button>
+                <button onClick={handleChooseRickshaw}>Choose Rickshaw</button>
             </label>
             )}
         </div>
         <br /><br />
         <div>
-            <button>Prioritize My Choice</button>
+            <button onClick={handlePrioritizeChoice}>Prioritize My Choice</button>
         </div>
         </div>
         

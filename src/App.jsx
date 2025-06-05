@@ -11,6 +11,7 @@ import { Plan3 } from '../src/components/bootforcemodel/plan3';
 import { UtilityInput } from '../src/components/bootforcemodel/utilityInput';
 import { TransportInput } from '../src/components/bootforcemodel/transportInput';
 import Vehicles from './components/bootforcemodel/vehicles';
+import Comparison from './components/bootforcemodel/comparison';
 
 
 
@@ -35,6 +36,8 @@ function App() {
       <Route path='/utilityInput' element={<UtilityInput />} />
       <Route path='/transportInput' element={<TransportInput />} />
       <Route path='/choose-vehicle' element={<Vehicles />} />
+      <Route path='/comparison' element={<Comparison />} />
+
 
       </Routes>
       </Router>
