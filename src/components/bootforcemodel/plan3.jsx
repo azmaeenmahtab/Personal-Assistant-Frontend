@@ -32,7 +32,7 @@ const Plan3 = () => {
             return;
         }
 
-        alert("Food cost inserted successfully");
+       // alert("Food cost inserted successfully");
 
         setFoodCost('');
         navigate('/utilityInput');

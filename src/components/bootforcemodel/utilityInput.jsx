@@ -20,7 +20,7 @@ const UtilityInput = () => {
             const token = localStorage.getItem("token");
     
             const body = {
-                "utility_cost" : parseFloat(utility)
+                "utility_cost" : utility
             };
     
             const response = await fetch("http://localhost:6543/api/utility_budget",{
@@ -39,7 +39,7 @@ const UtilityInput = () => {
                 return;
             }
     
-            alert("Utility cost inserted successfully");
+            //alert("Utility cost inserted successfully");
     
             setUtility('');
             navigate('/transportInput');

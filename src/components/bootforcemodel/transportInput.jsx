@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 const TransportInput = () => {
     const navigate = useNavigate();
-    const [distance, setDistance] = useState('');
+    const [distance, setDistance] = useState(0);
     const [flag, setFlag] = useState(null); // true = suggest walk, false = direct vehicle
     const [submitted, setSubmitted] = useState(false);
 
@@ -20,7 +20,7 @@ const TransportInput = () => {
             const token = localStorage.getItem("token");
 
             const body = {
-                distance: parseFloat(distance)
+                distance: distance
             };
 
             const response = await fetch("http://localhost:6543/api/transport_distance", {
@@ -38,7 +38,7 @@ const TransportInput = () => {
                 return;
             }
 
-            alert("Transport distance inserted successfully");
+            //alert("Transport distance inserted successfully");
 //-------------------------------chatgpt start--------------------------
             const numericDistance = parseFloat(distance);
             setFlag(numericDistance <= 2.5);

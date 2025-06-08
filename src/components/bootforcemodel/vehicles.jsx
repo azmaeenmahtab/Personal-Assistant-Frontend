@@ -70,7 +70,7 @@ const Vehicles = () => {
 
         
 
-        console.log(minFare, cheapestVehicle)
+     
 
         setCheapestVehicle(minObject.name);
         setminfare(minObject.fare);
@@ -482,7 +482,7 @@ const Vehicles = () => {
         }
 
         const data = response.json();
-        alert("Successfully inserted vehicle and fare in db");
+        //alert("Successfully inserted vehicle and fare in db");
 
         navigate('/comparison');
     }catch(error){

@@ -33,7 +33,7 @@ const Plan1 = () => {
             return;
         }
         setAmount("");
-        alert("Data saved successfully");
+        //alert("Data saved successfully");
         
         navigate('/plan2');
     }catch(error){

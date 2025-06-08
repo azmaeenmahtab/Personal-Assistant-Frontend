@@ -37,7 +37,7 @@ const Plan2 = () => {
             return;
         }
 
-        alert("Rental added successfully");
+        //alert("Rental added successfully");
 
         setRental("");
 
